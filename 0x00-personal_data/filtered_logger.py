@@ -63,7 +63,7 @@ def main():
     cursor = db.cursor()
     cursor.execute("SELECT * FROM users;")
     for row in cursor:
-        log_message = "; ".join(f"{field}={row[idx]}" for idx,
+        log_message = ";".join(f"{field}={row[idx]}" for idx,
                                 field in enumerate(cursor.column_names))
         logger = get_logger()
         logger.info(log_message)
