@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
+"""A module for filtering logs.
 """
-A module for obfuscating sensitive data in log messages.
-"""
-
 import os
 import re
 import logging
@@ -20,14 +18,14 @@ PII_FIELDS = ("name", "email", "phone", "ssn", "password")
 def filter_datum(
         fields: List[str], redaction: str, message: str, separator: str,
         ) -> str:
-    """Filter sensitive data in a log message.
+    """Filters a log line.
     """
     extract, replace = (patterns["extract"], patterns["replace"])
     return re.sub(extract(fields, separator), replace(redaction), message)
 
 
 def get_logger() -> logging.Logger:
-    """Create a logger for processing sensitive data.
+    """Creates a new logger for user data.
     """
     logger = logging.getLogger("user_data")
     stream_handler = logging.StreamHandler()
@@ -56,7 +54,7 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
 
 
 def main():
-    """Retrieve and obfuscate sensitive data from the database and log it.
+    """Logs the information about user records in a table.
     """
     fields = "name,email,phone,ssn,password,ip,last_login,user_agent"
     columns = fields.split(',')
@@ -78,7 +76,7 @@ def main():
 
 
 class RedactingFormatter(logging.Formatter):
-    """Formatter class to obfuscate sensitive fields in log records.
+    """ Redacting Formatter class
     """
 
     REDACTION = "***"
@@ -91,7 +89,7 @@ class RedactingFormatter(logging.Formatter):
         self.fields = fields
 
     def format(self, record: logging.LogRecord) -> str:
-        """Format a log record with sensitive fields obfuscated.
+        """formats a LogRecord.
         """
         msg = super(RedactingFormatter, self).format(record)
         txt = filter_datum(self.fields, self.REDACTION, msg, self.SEPARATOR)
