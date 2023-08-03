@@ -44,6 +44,7 @@ class RedactingFormatter(logging.Formatter):
 
 
 def get_logger():
+    """Creates a new logger for user data"""
     logger = logging.getLogger("user_data")
     logger.setLevel(logging.INFO)
     handler = logging.StreamHandler()
