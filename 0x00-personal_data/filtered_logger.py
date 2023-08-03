@@ -54,6 +54,7 @@ def get_logger():
 
 
 def get_db():
+    """Forms a connection to the database"""
     db_username = os.environ.get("PERSONAL_DATA_DB_USERNAME", "root")
     db_password = os.environ.get("PERSONAL_DATA_DB_PASSWORD", "")
     db_host = os.environ.get("PERSONAL_DATA_DB_HOST", "localhost")
@@ -69,6 +70,7 @@ def get_db():
 
 
 def main():
+    """Adds information about user ecords in a table"""
     db = get_db()
     cursor = db.cursor()
     cursor.execute("SELECT * FROM users;")
