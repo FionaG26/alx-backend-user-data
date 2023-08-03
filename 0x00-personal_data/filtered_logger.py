@@ -83,7 +83,7 @@ class RedactingFormatter(logging.Formatter):
     """
 
     REDACTION = "***"
-    FORMAT = "[SENSITIVE] %(name)s %(levelname)s %(asctime)-15s: %(message)s"
+    FORMAT = "[HOLBERTON] %(name)s %(levelname)s %(asctime)-15s: %(message)s"
     FORMAT_FIELDS = ('name', 'levelname', 'asctime', 'message')
     SEPARATOR = ";"
 
