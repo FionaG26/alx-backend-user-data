@@ -61,7 +61,7 @@ def main():
     fields = "name,email,phone,ssn,password,ip,last_login,user_agent"
     columns = fields.split(',')
     query = "SELECT {} FROM users;".format(fields)
-    sensitive_logger = get_logger()
+    info_logger = get_logger()
     connection = get_db()
     with connection.cursor() as cursor:
         cursor.execute(query)
@@ -72,10 +72,9 @@ def main():
                 zip(columns, row),
             )
             msg = '{};'.format('; '.join(list(record)))
-            args = ("sensitive_data", logging.INFO,
-                    None, None, msg, None, None)
+            args = ("user_data", logging.INFO, None, None, msg, None, None)
             log_record = logging.LogRecord(*args)
-            sensitive_logger.handle(log_record)
+            info_logger.handle(log_record)
 
 
 class RedactingFormatter(logging.Formatter):
