@@ -42,11 +42,16 @@ class DB:
         :param email: User's email
         :param hashed_password: Hashed password
         :return: User object
+        :raises Exception: If an error occurs while adding the user.
         """
-        new_user = User(email=email, hashed_password=hashed_password)
-        self._session.add(new_user)
-        self._session.commit()
-        return new_user
+        try:
+            new_user = User(email=email, hashed_password=hashed_password)
+            self._session.add(new_user)
+            self._session.commit()
+            return new_user
+        except Exception as e:
+            self._session.rollback()
+            raise e
 
     def find_user_by(self, **kwargs) -> User:
         """
